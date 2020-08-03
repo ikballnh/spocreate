@@ -1,5 +1,19 @@
 <?php
 //Created by ikballnh
+
+function random_str()
+    {
+        $data = '1234567890';
+        $string = '';
+        for($i = 0; $i <4; $i++) {
+            $pos = rand(0, strlen($data)-1);
+            $string .= $data{$pos};
+        }
+    
+return $string;
+        }
+
+
 function save($filename, $email)
 {
     $save = fopen($filename, "a");
@@ -81,7 +95,7 @@ $headers [] = "Accept-Language: en-US,en;q=0.9";
 $headers [] = "Referer: https://m.tokopedia.com/register?ld=";
 $headers [] = "Accept-Encoding: gzip, deflate";
 $headers [] = "Accept-Language: en-US,en;q=0.9";
-$headers [] = "Cookie: __cfduid=d38828fa7a1bd1b084014560fbb0369131591295947; _ga=GA1.2.1284780574.1591295957; _gid=GA1.2.73843276.1591295957; __gads=ID=60fa90a69e6b97d4:T=1591295968:S=ALNI_MaH-5WX-f0vB2fECQbdiATHHok4Sw";
+$headers [] = "Cookie: __cfduid=d1ac5699a3eed2061392920cd1e1c8f681596410052; _ga=GA1.2.287212906.1596410065; _gid=GA1.2.636514500.1596410065; __gads=ID=6f45820db820d9b3:T=1596410071:S=ALNI_MbBL4g5DAYgDq9cPJdLEGIt0tTr1A";
 
 
 $getotp = request($url, $data, $headers);
@@ -200,6 +214,7 @@ $count = count($hslnama);
 switch ($favcolor) {
   case "1":
 	for ($i=0; $i <$jmlh; $i++) { 
+	$b = random_str(); 
 	$anama = $hslnama[rand(0,$count)];
 	$bnama = $hslnama[rand(0,$count)];
 	$cnama = $hslnama[rand(0,$count)]; 
@@ -207,17 +222,19 @@ switch ($favcolor) {
 	$hsl2 = str_replace(" ", "", $fullnama);
 	$sub = substr($hsl2, 0, 15);
 	$kcl  = strtolower($sub);
-	$mail2 = "$kcl@inbox-me.top";
+	$kcl2 = "$kcl$b";
+	$mail2 = "$kcl2@inbox-me.top";
 
 	echo "Nama --> $fullnama\n";
-	createmail($kcl);
+	createmail($kcl2);
 	regis($mail2, $password, $fullnama);
 	sleep(5);
 	verivemail($mail2, $password, $file); 
 	echo "===========================\n";
 }    break;
   case "2":
-    for ($i=0; $i <$jmlh; $i++) { 
+    for ($i=0; $i <$jmlh; $i++) {
+    $b = random_str(); 
 	$anama = $hslnama[rand(0,$count)];
 	$bnama = $hslnama[rand(0,$count)];
 	$cnama = $hslnama[rand(0,$count)]; 
@@ -225,7 +242,7 @@ switch ($favcolor) {
 	$hsl2 = str_replace(" ", "", $fullnama);
 	$sub = substr($hsl2, 0, 15);
 	$kcl  = strtolower($sub);
-	$mail2 = "$kcl@inbox-me.top";
+	$mail2 = "$kcl$b@inbox-me.top";
 	$a = regis2($mail2, $password, $fullnama);
 	if ($a == false) {
 		echo "Gagal regis\n";
@@ -241,4 +258,3 @@ switch ($favcolor) {
 
 
 echo "Hasil di simpan di $file\n";
-
