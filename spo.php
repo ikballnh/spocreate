@@ -258,7 +258,7 @@ switch ($favcolor) {
 	echo "Nama --> $fullnama\n";
 	createmail($kcl2, $cfd);
 	regis($mail2, $password, $fullnama);
-	sleep(20);
+	sleep(7);
 	verivemail($mail2, $password, $file); 
 	echo "===========================\n";
 }    break;
