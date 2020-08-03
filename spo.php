@@ -76,9 +76,9 @@ function request($url, $data, $headers, $put = null) {
 }
 
 
-function createmail($email){
+function createmail($email, $cfd){
 $url = "https://api.internal.temp-mail.io/api/v3/email/new";
-$data = '{"name":"'.$email.'","domain":"inbox-me.top"}';
+$data = '{"name":"'.$email.'","domain":"montokop.pw"}';
 $headers = array();
 $headers [] = "Host: api.internal.temp-mail.io";
 $headers [] = "Connection: close";
@@ -95,7 +95,7 @@ $headers [] = "Accept-Language: en-US,en;q=0.9";
 $headers [] = "Referer: https://m.tokopedia.com/register?ld=";
 $headers [] = "Accept-Encoding: gzip, deflate";
 $headers [] = "Accept-Language: en-US,en;q=0.9";
-$headers [] = "Cookie: __cfduid=d1ac5699a3eed2061392920cd1e1c8f681596410052; _ga=GA1.2.287212906.1596410065; _gid=GA1.2.636514500.1596410065; __gads=ID=6f45820db820d9b3:T=1596410071:S=ALNI_MbBL4g5DAYgDq9cPJdLEGIt0tTr1A";
+$headers [] = "Cookie: __cfduid=$cfd; _ga=GA1.2.287212906.1596410065; _gid=GA1.2.636514500.1596410065; __gads=ID=6f45820db820d9b3:T=1596410071:S=ALNI_MbBL4g5DAYgDq9cPJdLEGIt0tTr1A";
 
 
 $getotp = request($url, $data, $headers);
@@ -104,7 +104,7 @@ $json = json_decode($getotp, true);
 //var_dump($json);
 
 if (strpos($getotp, "$email")) {
-		echo "Berhasil membuat email --> $email@inbox-me.top\n";	
+		echo "Berhasil membuat email --> $email@montokop.pw\n";	
 	} else {
 		echo "gagal bikin email\n";
 	}
@@ -192,6 +192,36 @@ getfol($output2, $email, $password, $file);
 
 }
 
+$url = "https://temp-mail.io/en"; 
+   
+// Initialize cURL object 
+$curlObj = curl_init(); 
+   
+/* setting values to required cURL parameters. 
+CURLOPT_URL is used to set the URL to fetch  
+CURLOPT_RETURNTRANSFER is enabled curl 
+response to be saved in a variable  
+CURLOPT_HEADER enables curl to include 
+protocol header CURLOPT_SSL_VERIFYPEER 
+enables to fetch SSL encrypted HTTPS request.*/
+curl_setopt($curlObj,  CURLOPT_URL,  $url); 
+curl_setopt($curlObj,  CURLOPT_RETURNTRANSFER,  1); 
+curl_setopt($curlObj,  CURLOPT_HEADER,  1); 
+curl_setopt($curlObj,  CURLOPT_SSL_VERIFYPEER,  false); 
+$result = curl_exec($curlObj); 
+   
+// Matching the response to extract cookie value 
+preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', 
+          $result,  $match_found); 
+   
+$cookies = array(); 
+foreach($match_found[1] as $item) { 
+    parse_str($item,  $cookie); 
+    $cookies = array_merge($cookies,  $cookie); 
+}
+
+$cfd = $cookies['__cfduid'];
+
 echo "=========================\n";
 echo "Spotify account creator + auto veriv\n";
 echo "Created by Ikbal Nur Hakim\n";
@@ -223,12 +253,12 @@ switch ($favcolor) {
 	$sub = substr($hsl2, 0, 15);
 	$kcl  = strtolower($sub);
 	$kcl2 = "$kcl$b";
-	$mail2 = "$kcl2@inbox-me.top";
+	$mail2 = "$kcl2@montokop.pw";
 
 	echo "Nama --> $fullnama\n";
-	createmail($kcl2);
+	createmail($kcl2, $cfd);
 	regis($mail2, $password, $fullnama);
-	sleep(5);
+	sleep(20);
 	verivemail($mail2, $password, $file); 
 	echo "===========================\n";
 }    break;
@@ -242,7 +272,7 @@ switch ($favcolor) {
 	$hsl2 = str_replace(" ", "", $fullnama);
 	$sub = substr($hsl2, 0, 15);
 	$kcl  = strtolower($sub);
-	$mail2 = "$kcl$b@inbox-me.top";
+	$mail2 = "$kcl$b@montokop.pw";
 	$a = regis2($mail2, $password, $fullnama);
 	if ($a == false) {
 		echo "Gagal regis\n";
